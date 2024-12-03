@@ -24,6 +24,24 @@
     ></textarea>
     <br />
 
+    <label for="ingredients">Ingredients:</label>
+    <div id="ingredients">
+      <% ingredients.forEach((ingredient) => { %>
+      <div>
+        <input
+          type="checkbox"
+          name="ingredients[]"
+          id="ingredient-<%= ingredient._id %>"
+          value="<%= ingredient._id %>"
+        />
+        <label for="ingredient-<%= ingredient._id %>"
+          ><%= ingredient.name %></label
+        >
+      </div>
+      <% }); %>
+    </div>
+    <br />
+
     <button type="submit">Add Recipe</button>
   </form>
 </body>
