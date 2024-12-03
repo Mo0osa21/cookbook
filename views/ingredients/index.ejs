@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Ingredients</title>
+  </head>
+  <body>
+    <%- include('../partials/_navbar.ejs') %>
+    <h1>Welcome to My Ingredients</h1>
+    <ul>
+      <% ingredients.forEach((Ingredient) => { %>
+      <li>
+        <%= Ingredient.name %>
+        <form
+          method="POST"
+          action="/ingredients/<%= Ingredient._id %>?_method=DELETE"
+        >
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+
+      <% }) %>
+    </ul>
+  </body>
+</html>

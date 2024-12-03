@@ -1,0 +1,13 @@
+<% if (user) { %>
+<h1>Welcome to the app, <%= user.username %>!</h1>
+<a href="/recipes">View all Recipes</a>
+<a href="/recipes/new">add Recipe</a>
+<a href="/ingredients">View all Ingredient</a>
+<a href="/ingredients/new">add Ingredients</a>
+<a href="/auth/sign-out">Sign out</a>
+<% } else { %>
+<h1>Welcome to the app, guest.</h1>
+<p>
+  <a href="/auth/sign-up">Sign up</a> or <a href="/auth/sign-in">sign in</a>.
+</p>
+<% } %>

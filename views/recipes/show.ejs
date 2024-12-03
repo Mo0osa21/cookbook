@@ -1,0 +1,21 @@
+<body>
+  <%- include('../partials/_navbar.ejs') %>
+
+  <h2><%= recipe.name %></h2>
+  <p><strong>Instructions:</strong> <%= recipe.instructions %></p>
+  <h2>Ingredients:</h2>
+  <ul>
+    <% recipe.ingredients.forEach((ingredient) => { %>
+    <li><%= ingredient.name %></li>
+    <% }); %>
+  </ul>
+  <% if (recipe.owner._id.equals(user._id)) { %>
+  <p>You own this!</p>
+  <form action="/recipes/<%= recipe._id %>?_method=DELETE" method="POST">
+    <button type="submit">Delete this recipe</button>
+  </form>
+  <a href="/recipes/<%= recipe._id %>/edit">Edit this recipe</a>
+  <% } else { %>
+  <p>You don't own this, <%= recipe.owner.username %> does!</p>
+  <% } %>
+</body>
