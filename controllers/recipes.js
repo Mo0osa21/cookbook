@@ -49,7 +49,7 @@ router.get('/:recipeId', async (req, res) => {
   try {
     const populatedRecipes = await Recipe.findById(
       req.params.recipeId
-    ).populate('owner')
+    ).populate('owner').populate("ingredients")
 
     res.render('recipes/show.ejs', {
       recipe: populatedRecipes
@@ -76,18 +76,26 @@ router.get('/:recipeId/edit', async (req, res) => {
 
 router.put('/:recipeId', async (req, res) => {
   try {
-    const currentRecipe = await Recipe.findById(req.params.recipeId)
+    const currentRecipe = await Recipe.findById(req.params.recipeId);
+
     if (currentRecipe.owner.equals(req.session.user._id)) {
-      await currentRecipe.updateOne(req.body)
-      res.redirect('/recipes')
+      const updatedIngredients = req.body['ingredients[]']; 
+      req.body.ingredients = Array.isArray(updatedIngredients)
+        ? updatedIngredients
+        : [updatedIngredients]; 
+      delete req.body['ingredients[]']; 
+
+      await currentRecipe.updateOne(req.body);
+      res.redirect('/recipes');
     } else {
-      res.send("You don't have permission to do that.")
+      res.send("You don't have permission to edit this recipe.");
     }
   } catch (error) {
-    console.log(error)
-    res.redirect('/')
+    console.error(error);
+    res.redirect('/');
   }
-})
+});
+
 
 router.delete('/:recipeId', async (req, res) => {
   try {

@@ -1,7 +1,7 @@
 <body>
   <%- include('../partials/_navbar.ejs') %>
 
-  <h1>Add a New Recipe</h1>
+  <h1>Edit Recipe</h1>
 
   <form method="POST" action="/recipes/<%= recipe._id %>?_method=PUT">
     <label for="name">Recipe Name:</label>
@@ -25,23 +25,26 @@
     <br />
 
     <label for="ingredients">Ingredients:</label>
-    <div id="ingredients">
-      <% ingredients.forEach((ingredient) => { %>
+  <div id="ingredients">
+    <% ingredients.forEach((ingredient) => { %>
       <div>
         <input
           type="checkbox"
           name="ingredients[]"
           id="ingredient-<%= ingredient._id %>"
           value="<%= ingredient._id %>"
+          <%= recipe.ingredients.some(
+            (selected) => selected._id.toString() === ingredient._id.toString()
+          )
+            ? 'checked'
+            : '' %>
         />
-        <label for="ingredient-<%= ingredient._id %>"
-          ><%= ingredient.name %></label
-        >
+        <label for="ingredient-<%= ingredient._id %>"><%= ingredient.name %></label>
       </div>
-      <% }); %>
-    </div>
+    <% }); %>
+  </div>
     <br />
 
-    <button type="submit">Add Recipe</button>
+    <button type="submit">Edit Recipe</button>
   </form>
 </body>
